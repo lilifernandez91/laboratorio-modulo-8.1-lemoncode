@@ -102,13 +102,20 @@ console.log(obtenPacientesAsignadosAPediatriaYMenorDeDiezAños(pacientes))
 const activarProtocoloUrgencia = (pacientes: Pacientes[]): boolean => {
     let activarProtocolo = false;
     for (let i = 0; i < pacientes.length; i++) {
-        if (pacientes[i].frecuenciaCardiaca > 100 || pacientes[i].temperatura > 39) {
+        if (pacientes[i].frecuenciaCardiaca > 100 && pacientes[i].temperatura > 39) {
             activarProtocolo = true
+            break
         }
     }
     return activarProtocolo
 };
-console.log('El protocolo de urgencia está en:', activarProtocoloUrgencia(pacientes))
+const protocolo = activarProtocoloUrgencia(pacientes)
+if (protocolo) {
+    console.log('Activar protocolo de urgencia')
+} else {
+    console.log('No activar protocolo de urgencia')
+}
+
 
 // 4. Reasignar los pacientes asignados a la especialidad de pediatría a la de medico de familia
 const reasignaPacientesAMedicoFamilia = (
@@ -128,15 +135,20 @@ console.log(reasignaPacientesAMedicoFamilia(pacientes))
 
 // 5. Queremos saber si podemos mandar al Pediatra a casa (si no tiene pacientes asignados), comprobar si en la lista hay algún paciente asignado a pediatría
 const hayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
-    let pediatraEnCasa = true
+    let pediatraEnCasa = false
     for (let i = 0; i < pacientes.length; i++) {
         if (pacientes[i].especialidad === 'Pediatra') {
-            pediatraEnCasa = false
+            pediatraEnCasa = true
         }
     }
     return pediatraEnCasa
 };
-console.log('La petición de enviar al pediatra a casa es:', hayPacientesDePediatria(pacientes))
+const pediatra = hayPacientesDePediatria(pacientes)
+if (pediatra) {
+    console.log('No se puede enviar al pediatra a casa')
+} else {
+    console.log('Se puede enviar al pediatra a casa')
+}
 
 // 6. Calcular el número total de pacientes que están asignados a la especialidad de Medico de familia, y lo que están asignados a Pediatría y a cardiología
 interface numeroPacientesPorEspecialidad {
